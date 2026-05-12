@@ -183,7 +183,7 @@ export default function TouchControls({ visible, onInputChange, superReady }: Pr
             <GlassBtn keyName="punch" size={68}
               color="rgba(239,68,68,0.2)" borderColor="rgba(239,68,68,0.45)" activeColor="rgba(239,68,68,0.5)"
               label="PUNCH" onStart={handleBtnStart} onEnd={handleBtnEnd} pressed={pressed.punch}>
-              <img src="/punch.png" className="w-8 h-8 drop-shadow" alt="Punch" />
+              <img src="/punch.png" className="w-8 h-8 drop-shadow" alt="Punch" style={{ filter: 'invert(1)' }} />
             </GlassBtn>
           </div>
 
@@ -192,7 +192,7 @@ export default function TouchControls({ visible, onInputChange, superReady }: Pr
             <GlassBtn keyName="kick" size={54}
               color="rgba(239,68,68,0.15)" borderColor="rgba(239,68,68,0.35)" activeColor="rgba(239,68,68,0.4)"
               label="KICK" onStart={handleBtnStart} onEnd={handleBtnEnd} pressed={pressed.kick}>
-              <img src="/kick.png" className="w-7 h-7 drop-shadow" alt="Kick" />
+              <img src="/kick.png" className="w-7 h-7 drop-shadow" alt="Kick" style={{ filter: 'invert(1)' }} />
             </GlassBtn>
           </div>
 
@@ -201,7 +201,7 @@ export default function TouchControls({ visible, onInputChange, superReady }: Pr
             <GlassBtn keyName="uppercut" size={50}
               color="rgba(251,146,60,0.18)" borderColor="rgba(251,146,60,0.4)" activeColor="rgba(251,146,60,0.45)"
               label="UPPER" onStart={handleBtnStart} onEnd={handleBtnEnd} pressed={pressed.uppercut}>
-              <img src="/uppercut.png" className="w-6 h-6 drop-shadow" alt="Uppercut" />
+              <img src="/uppercut.png" className="w-6 h-6 drop-shadow" alt="Uppercut" style={{ filter: 'invert(1)' }} />
             </GlassBtn>
           </div>
 
@@ -210,7 +210,7 @@ export default function TouchControls({ visible, onInputChange, superReady }: Pr
             <GlassBtn keyName="block" size={50}
               color="rgba(34,197,94,0.15)" borderColor="rgba(34,197,94,0.4)" activeColor="rgba(34,197,94,0.4)"
               label="BLOCK" onStart={handleBtnStart} onEnd={handleBtnEnd} pressed={pressed.block}>
-              <img src="/block.png" className="w-6 h-6 drop-shadow" alt="Block" />
+              <img src="/block.png" className="w-6 h-6 drop-shadow" alt="Block" style={{ filter: 'invert(1)' }} />
             </GlassBtn>
           </div>
         </div>
@@ -223,25 +223,25 @@ export default function TouchControls({ visible, onInputChange, superReady }: Pr
           <GlassBtn keyName="fireball" size={42}
             color="rgba(249,115,22,0.2)" borderColor="rgba(249,115,22,0.45)" activeColor="rgba(249,115,22,0.5)"
             label="FIRE" onStart={handleBtnStart} onEnd={handleBtnEnd} pressed={pressed.fireball}>
-            <img src="/fire.png" className="w-5 h-5 drop-shadow" alt="Fireball" />
+            <img src="/fire.png" className="w-5 h-5 drop-shadow" alt="Fireball" style={{ filter: 'invert(1)' }} />
           </GlassBtn>
           <GlassBtn keyName="lightning" size={42}
             color="rgba(234,179,8,0.2)" borderColor="rgba(234,179,8,0.45)" activeColor="rgba(234,179,8,0.5)"
             label="BOLT" onStart={handleBtnStart} onEnd={handleBtnEnd} pressed={pressed.lightning}>
-            <img src="/lighting.png" className="w-5 h-5 drop-shadow" alt="Lightning" />
+            <img src="/lighting.png" className="w-5 h-5 drop-shadow" alt="Lightning" style={{ filter: 'invert(1)' }} />
           </GlassBtn>
         </div>
         <div className="flex gap-2">
           <GlassBtn keyName="teleport" size={42}
             color="rgba(139,92,246,0.2)" borderColor="rgba(139,92,246,0.45)" activeColor="rgba(139,92,246,0.5)"
             label="WARP" onStart={handleBtnStart} onEnd={handleBtnEnd} pressed={pressed.teleport}>
-            <img src="/teleport.png" className="w-5 h-5 drop-shadow opacity-90" alt="Teleport" />
+            <img src="/teleport.png" className="w-5 h-5 drop-shadow opacity-90" alt="Teleport" style={{ filter: 'invert(1)' }} />
           </GlassBtn>
           {/* SUPER — Larger, more prominent */}
           <GlassBtn keyName="special" size={50}
             color="rgba(236,72,153,0.2)" borderColor="rgba(236,72,153,0.5)" activeColor="rgba(236,72,153,0.55)"
             label="SUPER" onStart={handleBtnStart} onEnd={handleBtnEnd} pressed={pressed.special} glow={superReady}>
-            <img src="/super-attack.png" className="w-6 h-6 drop-shadow" alt="Super Attack" />
+            <img src="/super-attack.png" className="w-6 h-6 drop-shadow" alt="Super Attack" style={{ filter: 'invert(1)' }} />
           </GlassBtn>
         </div>
       </div>
