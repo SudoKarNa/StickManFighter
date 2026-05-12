@@ -237,10 +237,10 @@ export default function GameCanvas({ network, playerName, onDisconnect }: Props)
       drawLightningBolts(ctx, state.lightningBolts);
       drawParticles(ctx, state.particles);
       drawDamageTexts(ctx, state.damageTexts);
-      drawCombo(ctx, state.player1); drawCombo(ctx, state.player2);
-      drawStyleRank(ctx, state.player1); drawStyleRank(ctx, state.player2);
-      drawPoiseBar(ctx, state.player1); drawPoiseBar(ctx, state.player2);
-      drawRegenIndicator(ctx, state.player1); drawRegenIndicator(ctx, state.player2);
+       drawCombo(ctx, state.player1); drawCombo(ctx, state.player2);
+       drawStyleRank(ctx, state.player1); drawStyleRank(ctx, state.player2);
+       // drawPoiseBar(ctx, state.player1); drawPoiseBar(ctx, state.player2); // Commented out to hide poise bar
+       drawRegenIndicator(ctx, state.player1); drawRegenIndicator(ctx, state.player2);
       ctx.restore();
       drawScreenFlash(ctx, state.screenFlash);
  
