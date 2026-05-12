@@ -249,12 +249,12 @@ export default function GameCanvas({ network, playerName, onDisconnect }: Props)
       drawAnnouncements(ctx, state.announcements);
  
       // UI
-      drawHealthBar(ctx, 20, 30, 350, state.player1.health, state.player1.maxHealth, state.player1.color, state.player1.name, false);
-      drawHealthBar(ctx, CANVAS_WIDTH-370, 30, 350, state.player2.health, state.player2.maxHealth, state.player2.color, state.player2.name, true);
-      drawEnergyBar(ctx, 20, 58, 350, state.player1.energy, state.player1.maxEnergy, false);
-      drawEnergyBar(ctx, CANVAS_WIDTH-370, 58, 350, state.player2.energy, state.player2.maxEnergy, true);
-      drawSuperBar(ctx, 20, 72, 350, state.player1.superCharge, state.player1.maxSuperCharge, false, state.player1.glowColor, frame);
-      drawSuperBar(ctx, CANVAS_WIDTH-370, 72, 350, state.player2.superCharge, state.player2.maxSuperCharge, true, state.player2.glowColor, frame);
+       drawHealthBar(ctx, 20, 30, 350, state.player1.health, state.player1.maxHealth, state.player1.color, state.player1.name, false);
+       drawHealthBar(ctx, CANVAS_WIDTH-370, 30, 350, state.player2.health, state.player2.maxHealth, state.player2.color, state.player2.name, true);
+       drawEnergyBar(ctx, 20, 66, 350, state.player1.energy, state.player1.maxEnergy, false);
+       drawEnergyBar(ctx, CANVAS_WIDTH-370, 66, 350, state.player2.energy, state.player2.maxEnergy, true);
+       drawSuperBar(ctx, 20, 90, 350, state.player1.superCharge, state.player1.maxSuperCharge, false, state.player1.glowColor, frame);
+       drawSuperBar(ctx, CANVAS_WIDTH-370, 90, 350, state.player2.superCharge, state.player2.maxSuperCharge, true, state.player2.glowColor, frame);
       drawTimer(ctx, Math.max(0, state.roundTimer/60));
       drawRoundInfo(ctx, state);
 

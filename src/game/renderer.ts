@@ -703,81 +703,156 @@ export function drawHealthBar(
   ctx: CanvasRenderingContext2D, x: number, y: number, width: number,
   health: number, maxHealth: number, color: string, name: string, isFlipped: boolean
 ) {
+  const barHeight = 28;
   const ratio = health / maxHealth;
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-  ctx.strokeStyle = '#555555';
-  ctx.lineWidth = 2;
-  roundRect(ctx, x, y, width, 24, 4); ctx.fill(); ctx.stroke();
 
-  const healthWidth = (width - 4) * ratio;
-  const hx = isFlipped ? x + width - 2 - healthWidth : x + 2;
-  const hGrad = ctx.createLinearGradient(hx, y, hx, y + 20);
-  if (ratio > 0.5) { hGrad.addColorStop(0, '#4ade80'); hGrad.addColorStop(1, '#22c55e'); }
-  else if (ratio > 0.25) { hGrad.addColorStop(0, '#fbbf24'); hGrad.addColorStop(1, '#f59e0b'); }
-  else { hGrad.addColorStop(0, '#f87171'); hGrad.addColorStop(1, '#ef4444'); }
+  // Background with subtle glow
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+  ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+  ctx.shadowBlur = 4;
+  roundRect(ctx, x, y, width, barHeight, 6); ctx.fill();
+  ctx.shadowBlur = 0;
+
+  // Border
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+  ctx.lineWidth = 1;
+  roundRect(ctx, x, y, width, barHeight, 6); ctx.stroke();
+
+  const healthWidth = (width - 6) * ratio;
+  const hx = isFlipped ? x + width - 3 - healthWidth : x + 3;
+  const hGrad = ctx.createLinearGradient(hx, y, hx, y + barHeight - 4);
+  if (ratio > 0.5) { hGrad.addColorStop(0, '#10b981'); hGrad.addColorStop(1, '#059669'); }
+  else if (ratio > 0.25) { hGrad.addColorStop(0, '#f59e0b'); hGrad.addColorStop(1, '#d97706'); }
+  else { hGrad.addColorStop(0, '#ef4444'); hGrad.addColorStop(1, '#dc2626'); }
   ctx.fillStyle = hGrad;
-  roundRect(ctx, hx, y + 2, healthWidth, 20, 3); ctx.fill();
+  roundRect(ctx, hx, y + 2, healthWidth, barHeight - 4, 4); ctx.fill();
 
-  ctx.fillStyle = color; ctx.font = 'bold 14px "Segoe UI", sans-serif';
+  // Name with shadow
+  ctx.fillStyle = color;
+  ctx.font = '600 14px "Segoe UI", sans-serif';
   ctx.textAlign = isFlipped ? 'right' : 'left';
-  ctx.fillText(name, isFlipped ? x + width : x, y - 6);
-  ctx.fillStyle = '#ffffff'; ctx.font = 'bold 12px "Segoe UI", sans-serif';
+  ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
+  ctx.shadowBlur = 2;
+  ctx.fillText(name, isFlipped ? x + width - 4 : x + 4, y - 8);
+  ctx.shadowBlur = 0;
+
+  // Value centered
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '600 14px "Segoe UI", sans-serif';
   ctx.textAlign = 'center';
-  ctx.fillText(`${Math.ceil(health)}`, x + width / 2, y + 16);
+  ctx.fillText(`${Math.ceil(health)}`, x + width / 2, y + 18);
 }
 
 export function drawEnergyBar(
   ctx: CanvasRenderingContext2D, x: number, y: number, width: number,
   energy: number, maxEnergy: number, isFlipped: boolean
 ) {
+  const barHeight = 20;
   const ratio = energy / maxEnergy;
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-  roundRect(ctx, x, y, width, 10, 3); ctx.fill();
-  const energyWidth = (width - 2) * ratio;
-  const ex = isFlipped ? x + width - 1 - energyWidth : x + 1;
-  const eGrad = ctx.createLinearGradient(ex, y, ex, y + 8);
-  eGrad.addColorStop(0, '#60a5fa'); eGrad.addColorStop(1, '#3b82f6');
+
+  // Background
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+  ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+  ctx.shadowBlur = 2;
+  roundRect(ctx, x, y, width, barHeight, 4); ctx.fill();
+  ctx.shadowBlur = 0;
+
+  // Border
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+  ctx.lineWidth = 1;
+  roundRect(ctx, x, y, width, barHeight, 4); ctx.stroke();
+
+  const energyWidth = (width - 4) * ratio;
+  const ex = isFlipped ? x + width - 2 - energyWidth : x + 2;
+  const eGrad = ctx.createLinearGradient(ex, y, ex, y + barHeight - 4);
+  eGrad.addColorStop(0, '#3b82f6'); eGrad.addColorStop(1, '#1d4ed8');
   ctx.fillStyle = eGrad;
-  roundRect(ctx, ex, y + 1, energyWidth, 8, 2); ctx.fill();
+  roundRect(ctx, ex, y + 2, energyWidth, barHeight - 4, 3); ctx.fill();
+
+  // Label
+  ctx.fillStyle = '#60a5fa';
+  ctx.font = '500 12px "Segoe UI", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(`${Math.ceil(energy)}`, x + width / 2, y + 14);
 }
 
 export function drawSuperBar(
   ctx: CanvasRenderingContext2D, x: number, y: number, width: number,
   charge: number, maxCharge: number, isFlipped: boolean, color: string, frame: number
 ) {
+  const barHeight = 16;
   const ratio = charge / maxCharge;
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-  roundRect(ctx, x, y, width, 8, 3); ctx.fill();
-  const barWidth = (width - 2) * ratio;
-  const bx = isFlipped ? x + width - 1 - barWidth : x + 1;
+
+  // Background
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+  ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+  ctx.shadowBlur = 2;
+  roundRect(ctx, x, y, width, barHeight, 4); ctx.fill();
+  ctx.shadowBlur = 0;
+
+  // Border
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)';
+  ctx.lineWidth = 1;
+  roundRect(ctx, x, y, width, barHeight, 4); ctx.stroke();
+
+  const barWidth = (width - 4) * ratio;
+  const bx = isFlipped ? x + width - 2 - barWidth : x + 2;
 
   if (ratio >= 1) {
-    const pulse = 0.7 + Math.sin(frame * 0.15) * 0.3;
+    const pulse = 0.8 + Math.sin(frame * 0.15) * 0.2;
     const sGrad = ctx.createLinearGradient(bx, y, bx + barWidth, y);
     sGrad.addColorStop(0, `rgba(251,191,36,${pulse})`);
-    sGrad.addColorStop(0.5, `rgba(255,255,200,${pulse})`);
+    sGrad.addColorStop(0.5, `rgba(255,215,0,${pulse})`);
     sGrad.addColorStop(1, `rgba(251,191,36,${pulse})`);
     ctx.fillStyle = sGrad;
+    ctx.shadowColor = '#fbbf24';
+    ctx.shadowBlur = 8;
   } else {
-    const sGrad = ctx.createLinearGradient(bx, y, bx, y + 6);
-    sGrad.addColorStop(0, color); sGrad.addColorStop(1, hexToRgba(color, 0.6));
+    const sGrad = ctx.createLinearGradient(bx, y, bx, y + barHeight - 4);
+    sGrad.addColorStop(0, color); sGrad.addColorStop(1, hexToRgba(color, 0.7));
     ctx.fillStyle = sGrad;
   }
-  roundRect(ctx, bx, y + 1, barWidth, 6, 2); ctx.fill();
+  roundRect(ctx, bx, y + 2, barWidth, barHeight - 4, 3); ctx.fill();
+  ctx.shadowBlur = 0;
 
-  ctx.fillStyle = ratio >= 1 ? '#fbbf24' : '#888888';
-  ctx.font = '9px "Segoe UI", sans-serif';
-  ctx.textAlign = isFlipped ? 'right' : 'left';
-  ctx.fillText(ratio >= 1 ? '⚡ SUPER READY!' : '⚡ SUPER', isFlipped ? x + width : x, y - 2);
+  // Label
+  ctx.fillStyle = ratio >= 1 ? '#fbbf24' : '#aaaaaa';
+  ctx.font = '500 12px "Segoe UI", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText(ratio >= 1 ? '⚡ SUPER READY!' : '⚡ SUPER', x + width / 2, y - 6);
 }
 
 export function drawTimer(ctx: CanvasRenderingContext2D, timeSeconds: number) {
-  ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-  ctx.strokeStyle = '#666666'; ctx.lineWidth = 2;
-  roundRect(ctx, CANVAS_WIDTH / 2 - 30, 10, 60, 40, 8); ctx.fill(); ctx.stroke();
+  const width = 80, height = 36, x = CANVAS_WIDTH / 2 - width / 2, y = 12;
+
+  // Background with glow
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.8)';
+  ctx.shadowColor = 'rgba(0, 0, 0, 0.6)';
+  ctx.shadowBlur = 6;
+  roundRect(ctx, x, y, width, height, 8); ctx.fill();
+  ctx.shadowBlur = 0;
+
+  // Border
+  ctx.strokeStyle = timeSeconds <= 10 ? 'rgba(248,113,113,0.5)' : 'rgba(255,255,255,0.3)';
+  ctx.lineWidth = 2;
+  roundRect(ctx, x, y, width, height, 8); ctx.stroke();
+
+  // Text
   ctx.fillStyle = timeSeconds <= 10 ? '#f87171' : '#ffffff';
-  ctx.font = 'bold 24px "Segoe UI", sans-serif'; ctx.textAlign = 'center';
-  ctx.fillText(`${Math.ceil(timeSeconds)}`, CANVAS_WIDTH / 2, 40);
+  ctx.font = '600 20px "Segoe UI", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.shadowColor = 'rgba(0,0,0,0.8)';
+  ctx.shadowBlur = 2;
+  ctx.fillText(`${Math.ceil(timeSeconds)}`, CANVAS_WIDTH / 2, y + 24);
+  ctx.shadowBlur = 0;
+
+  // Subtle inner glow for low time
+  if (timeSeconds <= 10) {
+    ctx.shadowColor = '#f87171';
+    ctx.shadowBlur = 10;
+    ctx.fillText(`${Math.ceil(timeSeconds)}`, CANVAS_WIDTH / 2, y + 24);
+    ctx.shadowBlur = 0;
+  }
 }
 
 export function drawCombo(ctx: CanvasRenderingContext2D, fighter: Fighter) {
@@ -793,15 +868,46 @@ export function drawCombo(ctx: CanvasRenderingContext2D, fighter: Fighter) {
 }
 
 export function drawRoundInfo(ctx: CanvasRenderingContext2D, state: GameState) {
-  ctx.fillStyle = '#aaaaaa'; ctx.font = '12px "Segoe UI", sans-serif'; ctx.textAlign = 'center';
-  ctx.fillText(`Round ${state.round} / ${state.maxRounds}`, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 10);
+  // Background panel
+  const panelWidth = 200, panelHeight = 30, x = CANVAS_WIDTH / 2 - panelWidth / 2, y = CANVAS_HEIGHT - 35;
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+  ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+  ctx.shadowBlur = 4;
+  roundRect(ctx, x, y, panelWidth, panelHeight, 6); ctx.fill();
+  ctx.shadowBlur = 0;
+
+  // Border
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+  ctx.lineWidth = 1;
+  roundRect(ctx, x, y, panelWidth, panelHeight, 6); ctx.stroke();
+
+  // Round text
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '500 14px "Segoe UI", sans-serif';
+  ctx.textAlign = 'center';
+  ctx.shadowColor = 'rgba(0,0,0,0.8)';
+  ctx.shadowBlur = 1;
+  ctx.fillText(`Round ${state.round} / ${state.maxRounds}`, CANVAS_WIDTH / 2, y + 20);
+  ctx.shadowBlur = 0;
+
+  // Win indicators with glow
   for (let i = 0; i < state.player1.wins; i++) {
-    ctx.fillStyle = '#fbbf24'; ctx.beginPath();
-    ctx.arc(CANVAS_WIDTH / 2 - 50 - i * 20, CANVAS_HEIGHT - 15, 6, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fbbf24';
+    ctx.shadowColor = '#fbbf24';
+    ctx.shadowBlur = 4;
+    ctx.beginPath();
+    ctx.arc(CANVAS_WIDTH / 2 - 60 - i * 18, y + 8, 5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
   }
   for (let i = 0; i < state.player2.wins; i++) {
-    ctx.fillStyle = '#fbbf24'; ctx.beginPath();
-    ctx.arc(CANVAS_WIDTH / 2 + 50 + i * 20, CANVAS_HEIGHT - 15, 6, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#fbbf24';
+    ctx.shadowColor = '#fbbf24';
+    ctx.shadowBlur = 4;
+    ctx.beginPath();
+    ctx.arc(CANVAS_WIDTH / 2 + 60 + i * 18, y + 8, 5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
   }
 }
 
