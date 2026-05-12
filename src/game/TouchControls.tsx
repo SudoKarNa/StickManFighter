@@ -8,8 +8,8 @@ interface Props {
 
 // ─── COD/PUBG-Style Glass Button ────────────────────────
 function GlassBtn({
-  children, keyName, size = 60, color = 'rgba(255,255,255,0.15)',
-  borderColor = 'rgba(255,255,255,0.25)', activeColor = 'rgba(255,255,255,0.4)',
+  children, keyName, size = 55, color = 'rgba(255,255,255,0.12)',
+  borderColor = 'rgba(255,255,255,0.3)', activeColor = 'rgba(255,255,255,0.35)',
   label, onStart, onEnd, pressed = false,
 }: {
   children: React.ReactNode; keyName: string; size?: number;
@@ -20,15 +20,15 @@ function GlassBtn({
   return (
     <div className="flex flex-col items-center gap-0.5" style={{ touchAction: 'none' }}>
       <div
-        className="rounded-full flex items-center justify-center backdrop-blur-sm transition-transform duration-[50ms]"
+        className="rounded-full flex items-center justify-center backdrop-blur-md transition-all duration-[50ms]"
         style={{
           width: size, height: size,
           background: pressed ? activeColor : color,
-          border: `2px solid ${pressed ? 'rgba(255,255,255,0.5)' : borderColor}`,
+          border: `1.5px solid ${pressed ? 'rgba(255,255,255,0.6)' : borderColor}`,
           boxShadow: pressed
-            ? `0 0 20px ${borderColor}, inset 0 0 15px rgba(255,255,255,0.1)`
-            : `0 2px 8px rgba(0,0,0,0.3), inset 0 1px 2px rgba(255,255,255,0.05)`,
-          transform: pressed ? 'scale(0.88)' : 'scale(1)',
+            ? `0 0 25px ${borderColor}, inset 0 0 20px rgba(255,255,255,0.15)`
+            : `0 4px 12px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.08)`,
+          transform: pressed ? 'scale(0.9)' : 'scale(1)',
           WebkitTapHighlightColor: 'transparent',
         }}
         onTouchStart={(e) => { e.preventDefault(); e.stopPropagation(); onStart(keyName); }}
@@ -38,8 +38,8 @@ function GlassBtn({
         {children}
       </div>
       {label && (
-        <span className="text-[8px] font-bold tracking-widest uppercase"
-          style={{ color: pressed ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.4)' }}>
+        <span className="text-[7px] font-semibold tracking-wider uppercase"
+          style={{ color: pressed ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.5)' }}>
           {label}
         </span>
       )}
@@ -128,7 +128,7 @@ export default function TouchControls({ visible, onInputChange }: Props) {
 
   return (
     <div className="hud-controls fixed inset-0 z-50 pointer-events-none"
-      style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.15) 0%, transparent 20%)' }}>
+      style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.08) 0%, transparent 30%)' }}>
 
       {/* ═══════ LEFT: JOYSTICK ═══════ */}
       <div className="absolute left-3 bottom-5 pointer-events-auto" style={{ touchAction: 'none' }}>
@@ -174,10 +174,10 @@ export default function TouchControls({ visible, onInputChange }: Props) {
 
       {/* ═══════ RIGHT: MAIN ATTACKS (CoD-style diamond) ═══════ */}
       <div className="absolute right-3 bottom-5 pointer-events-auto" style={{ touchAction: 'none' }}>
-        <div className="relative" style={{ width: 180, height: 180 }}>
+        <div className="relative" style={{ width: 160, height: 160 }}>
           {/* PUNCH — Large primary button (like CoD fire button) */}
           <div className="absolute" style={{ right: 0, top: '50%', transform: 'translateY(-50%)' }}>
-            <GlassBtn keyName="punch" size={72}
+            <GlassBtn keyName="punch" size={68}
               color="rgba(239,68,68,0.2)" borderColor="rgba(239,68,68,0.45)" activeColor="rgba(239,68,68,0.5)"
               label="PUNCH" onStart={handleBtnStart} onEnd={handleBtnEnd} pressed={pressed.punch}>
               <svg viewBox="0 0 24 24" fill="white" className="w-8 h-8 drop-shadow">
@@ -188,7 +188,7 @@ export default function TouchControls({ visible, onInputChange }: Props) {
 
           {/* KICK — Bottom */}
           <div className="absolute" style={{ left: '50%', bottom: 0, transform: 'translateX(-50%)' }}>
-            <GlassBtn keyName="kick" size={58}
+            <GlassBtn keyName="kick" size={54}
               color="rgba(239,68,68,0.15)" borderColor="rgba(239,68,68,0.35)" activeColor="rgba(239,68,68,0.4)"
               label="KICK" onStart={handleBtnStart} onEnd={handleBtnEnd} pressed={pressed.kick}>
               <svg viewBox="0 0 24 24" fill="white" className="w-7 h-7 drop-shadow">
@@ -199,7 +199,7 @@ export default function TouchControls({ visible, onInputChange }: Props) {
 
           {/* UPPERCUT — Top */}
           <div className="absolute" style={{ left: '50%', top: 0, transform: 'translateX(-50%)' }}>
-            <GlassBtn keyName="uppercut" size={54}
+            <GlassBtn keyName="uppercut" size={50}
               color="rgba(251,146,60,0.18)" borderColor="rgba(251,146,60,0.4)" activeColor="rgba(251,146,60,0.45)"
               label="UPPER" onStart={handleBtnStart} onEnd={handleBtnEnd} pressed={pressed.uppercut}>
               <svg viewBox="0 0 24 24" fill="white" className="w-6 h-6 drop-shadow">
@@ -210,7 +210,7 @@ export default function TouchControls({ visible, onInputChange }: Props) {
 
           {/* BLOCK — Left */}
           <div className="absolute" style={{ left: 0, top: '50%', transform: 'translateY(-50%)' }}>
-            <GlassBtn keyName="block" size={54}
+            <GlassBtn keyName="block" size={50}
               color="rgba(34,197,94,0.15)" borderColor="rgba(34,197,94,0.4)" activeColor="rgba(34,197,94,0.4)"
               label="BLOCK" onStart={handleBtnStart} onEnd={handleBtnEnd} pressed={pressed.block}>
               <svg viewBox="0 0 24 24" fill="white" className="w-6 h-6 drop-shadow">
@@ -225,14 +225,14 @@ export default function TouchControls({ visible, onInputChange }: Props) {
       <div className="absolute right-[200px] bottom-6 pointer-events-auto flex flex-col gap-2 items-center"
         style={{ touchAction: 'none' }}>
         <div className="flex gap-2">
-          <GlassBtn keyName="fireball" size={46}
+          <GlassBtn keyName="fireball" size={42}
             color="rgba(249,115,22,0.2)" borderColor="rgba(249,115,22,0.45)" activeColor="rgba(249,115,22,0.5)"
             label="FIRE" onStart={handleBtnStart} onEnd={handleBtnEnd} pressed={pressed.fireball}>
             <svg viewBox="0 0 24 24" fill="white" className="w-5 h-5 drop-shadow">
               <path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/>
             </svg>
           </GlassBtn>
-          <GlassBtn keyName="lightning" size={46}
+          <GlassBtn keyName="lightning" size={42}
             color="rgba(234,179,8,0.2)" borderColor="rgba(234,179,8,0.45)" activeColor="rgba(234,179,8,0.5)"
             label="BOLT" onStart={handleBtnStart} onEnd={handleBtnEnd} pressed={pressed.lightning}>
             <svg viewBox="0 0 24 24" fill="white" className="w-5 h-5 drop-shadow">
@@ -241,7 +241,7 @@ export default function TouchControls({ visible, onInputChange }: Props) {
           </GlassBtn>
         </div>
         <div className="flex gap-2">
-          <GlassBtn keyName="teleport" size={46}
+          <GlassBtn keyName="teleport" size={42}
             color="rgba(139,92,246,0.2)" borderColor="rgba(139,92,246,0.45)" activeColor="rgba(139,92,246,0.5)"
             label="WARP" onStart={handleBtnStart} onEnd={handleBtnEnd} pressed={pressed.teleport}>
             <svg viewBox="0 0 24 24" fill="white" className="w-5 h-5 drop-shadow opacity-90">
@@ -250,7 +250,7 @@ export default function TouchControls({ visible, onInputChange }: Props) {
             </svg>
           </GlassBtn>
           {/* SUPER — Larger, more prominent */}
-          <GlassBtn keyName="special" size={54}
+          <GlassBtn keyName="special" size={50}
             color="rgba(236,72,153,0.2)" borderColor="rgba(236,72,153,0.5)" activeColor="rgba(236,72,153,0.55)"
             label="SUPER" onStart={handleBtnStart} onEnd={handleBtnEnd} pressed={pressed.special}>
             <svg viewBox="0 0 24 24" fill="white" className="w-6 h-6 drop-shadow">
